@@ -21,11 +21,11 @@ class ProductsController < ApplicationController
 
   def create
     # byebug
-    @user = current_user.email
-    @product = User.last.products.new(product_params)
+    @user = current_user
+    @product = @user.products.new(product_params)
     @product.user_id = current_user.id
     if @product.save
-    UserMailer.new_product_email(@product, @user).deliver_now
+    UserMailer.new_product_email(@product, @user.email).deliver_now
     redirect_to @product
     else
       render :new

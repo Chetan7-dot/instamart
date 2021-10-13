@@ -27,4 +27,9 @@ RSpec.describe Product, type: :model do
   describe "Associations" do
     it { should have_many(:cart_items) }
   end
+
+  describe "GET products#new" do
+    it "should render products#new template" do
+    end
+    end
 end
