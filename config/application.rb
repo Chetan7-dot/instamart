@@ -12,7 +12,7 @@ module InstaMart
     config.load_defaults 6.1
     # config/application.rb
     config.action_mailer.default_url_options = { host: "example.com" }
-
+    config.active_job.queue_adapter = :sidekiq
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

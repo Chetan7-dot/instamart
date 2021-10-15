@@ -2,13 +2,13 @@ class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
 
   def index
-    @categories = Category.all
-    cate = params[:cate]
-    if !cate.nil?
-      @products = Product.where(category_id: cate)
-    else
+    # @categories = Category.all
+    # cate = params[:cate]
+    # if !cate.nil?
+      # @products = Product.where(category_id: cate)
+    # else
       @products = Product.all
-    end
+    # end
   end
 
   def new
@@ -26,6 +26,7 @@ class ProductsController < ApplicationController
     @product.user_id = current_user.id
     if @product.save
     UserMailer.new_product_email(@product, @user.email).deliver_now
+    SendNotificationsJob.perform_now(@product)
     redirect_to @product
     else
       render :new
@@ -42,7 +43,6 @@ class ProductsController < ApplicationController
 
   def destroy
     @product.destroy
-
     redirect_to root_path
   end
 
