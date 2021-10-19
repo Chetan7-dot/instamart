@@ -2,13 +2,7 @@ class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
 
   def index
-    # @categories = Category.all
-    # cate = params[:cate]
-    # if !cate.nil?
-      # @products = Product.where(category_id: cate)
-    # else
-      @products = Product.all
-    # end
+    @products = Product.all
   end
 
   def new
@@ -20,13 +14,12 @@ class ProductsController < ApplicationController
   def edit;  end
 
   def create
-    # byebug
     @user = current_user
     @product = @user.products.new(product_params)
     @product.user_id = current_user.id
     if @product.save
     UserMailer.new_product_email(@product, @user.email).deliver_now
-    SendNotificationsJob.perform_now(@product)
+    # SendNotificationsJob.perform_now(@product)
     redirect_to @product
     else
       render :new

@@ -31,5 +31,5 @@ RSpec.describe Product, type: :model do
   describe "GET products#new" do
     it "should render products#new template" do
     end
-    end
+  end
 end
